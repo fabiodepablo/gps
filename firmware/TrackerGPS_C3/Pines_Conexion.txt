@@ -12,7 +12,7 @@
    * VIO -> Al pin 3.3V de tu C3 Super Mini. Esto nivela los datos a 3.3V y cuida la placa.
    * TX -> Al pin GPIO 20 del C3 Super Mini.
    * RX -> Al pin GPIO 21 del C3 Super Mini.
-   * PWR -> Pin de encendido (PWRKEY). Si el módulo no arranca rojo/titilando al darle energía, hace un puente permanente de este pin con GND.
+   * PWR -> ¡IMPORTANTE PARA AUTO-ENCENDIDO! Conéctalo al pin GPIO 3 de tu ESP32 C3. El software ahora está configurado para "presionar" electrónicamente este botón por ti al arranque, soltándolo a los 1.5s sin que tú hagas nada.
    * DTR, RI, RST -> Dejalos desconectados.
 
 3. BOTON PORTAL WEB / CONFIGURACION:

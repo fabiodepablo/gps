@@ -212,14 +212,27 @@ String sendAT(String cmd, uint32_t waitMs = 1000) {
   return res;
 }
 
+const int PWR_PIN = 3; // Pin para auto-encendido electrónico en C3
+
 void initModem() {
   modem.begin(9600, SERIAL_8N1, 20, 21); delay(1000); // Pines RX=20, TX=21 para C3 Super Mini
   
   String test = sendAT("AT", 1000);
   if (test.indexOf("OK") == -1) {
-    dispData.gsmStatus = "Modulo Desconectado";
-    dispData.dbConnected = false;
-    return;
+    dispData.gsmStatus = "Encendiendo SIM808...";
+    updateDisplay();
+    pinMode(PWR_PIN, OUTPUT);
+    digitalWrite(PWR_PIN, LOW); 
+    delay(1500);                
+    digitalWrite(PWR_PIN, HIGH);
+    delay(3000);                
+    
+    test = sendAT("AT", 1000);
+    if (test.indexOf("OK") == -1) {
+      dispData.gsmStatus = "Mod. Desconectado/Sin Energia";
+      dispData.dbConnected = false;
+      return;
+    }
   }
   
   modem.println("AT+CGNSPWR=1"); delay(100);

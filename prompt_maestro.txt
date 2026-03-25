@@ -1,5 +1,7 @@
 Contexto del Proyecto: Profesional GPS Tracker Multi-Vehículo
 
+AFAAABIO
+
 He desarrollado un sistema de rastreo GPS propio compuesto por hardware embebido y una plataforma web. Necesito que actúes como un Ingeniero IoT y Desarrollador Full-Stack para ayudarme a mantenerlo y escalarlo.
 
 1. Arquitectura de Hardware (Firmware C++ / Arduino):

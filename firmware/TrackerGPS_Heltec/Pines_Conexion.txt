@@ -1,17 +1,17 @@
-====== CONEXIONES PARA EL HELTEC ESP32 LORA V3 ======
+====== CONEXIONES PARA EL HELTEC ESP32 LORA V2 ======
 
 1. PANTALLA OLED:
    * Ya viene soldada internamente en la placa Heltec.
-   * Pines internos usados: SDA=17, SCL=18, RST=21.
-   * Pin de energia interno (Vext): GPIO36 (controlado por el software).
+   * Pines internos usados: SDA=4, SCL=15, RST=16.
+   * Pin de energia interno (Vext): GPIO21 (controlado por el software).
 
 2. MODULO GPS/GSM SIM808 (Identificación exacta de tu placa):
    * VBAT -> Al POSITIVO (+) directo de tu Batería 18650 (3.7v a 4.2v). ¡El mñodulo necesita picos de 2A, NUNCA lo alimentes del pin 3V3 del ESP32!
    * GND -> Al NEGATIVO (-) de tu Batería Y a un pin GND de tu placa Heltec (deben compartir masa).
    * VIO -> Al pin 3V3 (3.3v) de la Heltec. Es VITAL: le dice al SIM808 que los datos se leen a 3.3 voltios para no quemar tu ESP32.
-   * TX -> Al pin GPIO 4 de la Heltec.
-   * RX -> Al pin GPIO 5 de la Heltec.
-   * PWR -> Pin de encendido (PWRKEY). Si el módulo no arranca solo al conectarlo a la batería, hazle un puente permanente hacia GND, o presiona el mini botón que suele traer la plaquita durante 1 segundo.
+   * TX -> Al pin GPIO 22 de la Heltec.
+   * RX -> Al pin GPIO 23 de la Heltec.
+   * PWR -> ¡IMPORTANTE PARA AUTO-ENCENDIDO! Conéctalo al pin GPIO 12 de tu ESP32. El software ahora está configurado para "presionar" electrónicamente este botón por ti al arranque, soltándolo a los 1.5s sin que tú hagas nada.
    * DTR, RI, RST -> Dejalos totalmente desconectados (al aire).
 
 3. BOTON PORTAL WEB / CONFIGURACION:

@@ -108,7 +108,7 @@ void stopAPMode() {
 // -------------------------------------------------------------------
 // 2. DISPLAY ESTADO Y UI
 // -------------------------------------------------------------------
-U8G2_SSD1306_128X64_NONAME_F_HW_I2C u8g2(U8G2_R0, /* reset=*/ 21, /* clock=*/ 18, /* data=*/ 17);
+U8G2_SSD1306_128X64_NONAME_F_HW_I2C u8g2(U8G2_R0, /* reset=*/ 16, /* clock=*/ 15, /* data=*/ 4);
 
 enum ScreenState { SCREEN_BOOT, SCREEN_NO_CONFIG, SCREEN_AP_MODE, SCREEN_GENERAL, SCREEN_GPS, SCREEN_GSM };
 ScreenState currentScreen = SCREEN_BOOT;
@@ -128,7 +128,7 @@ struct DisplayData {
 } dispData;
 
 void initDisplay() {
-  pinMode(36, OUTPUT); digitalWrite(36, LOW); // Encender Vext display en Heltec
+  pinMode(21, OUTPUT); digitalWrite(21, LOW); // Encender Vext display en Heltec V2
   delay(50);
   u8g2.begin(); u8g2.clearBuffer();
   u8g2.setFont(u8g2_font_ncenB10_tr); u8g2.drawStr(20, 30, "Tracker GPS");
@@ -203,7 +203,7 @@ void updateDisplay() {
 // -------------------------------------------------------------------
 // 3. COMUNICACION SIM808
 // -------------------------------------------------------------------
-HardwareSerial modem(1); // UART1 (RX=4, TX=5)
+HardwareSerial modem(1); // UART1
 unsigned long lastModemCheck = 0;
 
 String sendAT(String cmd, uint32_t waitMs = 1000) {
@@ -213,15 +213,29 @@ String sendAT(String cmd, uint32_t waitMs = 1000) {
   return res;
 }
 
+const int PWR_PIN = 12; // Pin para auto-encendido electrónico
+
 void initModem() {
-  modem.begin(9600, SERIAL_8N1, 4, 5); delay(1000);
+  modem.begin(9600, SERIAL_8N1, 22, 23); delay(1000);
   
-  // Probar conexion basica del hardware
+  // Probar conexion basica del hardware a ver si ya esta encendido
   String test = sendAT("AT", 1000);
   if (test.indexOf("OK") == -1) {
-    dispData.gsmStatus = "Modulo Desconectado";
-    dispData.dbConnected = false;
-    return; // Evita seguir mandando comandos si no hay modulo
+    // Esta apagado, ejecutamos un pulso electronico para prenderlo (PWRKEY)
+    dispData.gsmStatus = "Encendiendo SIM808...";
+    updateDisplay();
+    pinMode(PWR_PIN, OUTPUT);
+    digitalWrite(PWR_PIN, LOW); // Simula presionar el boton
+    delay(1500);                // Mantenido por 1.5s
+    digitalWrite(PWR_PIN, HIGH); // Suelta el boton
+    delay(3000);                // Espera a que bootee el modulo
+    
+    test = sendAT("AT", 1000);
+    if (test.indexOf("OK") == -1) {
+      dispData.gsmStatus = "Mod. Desconectado/Sin Bateria";
+      dispData.dbConnected = false;
+      return; 
+    }
   }
 
   modem.println("AT+CGNSPWR=1"); delay(100);
@@ -289,7 +303,7 @@ void sendDataToAPI(String devName, String url) {
 // 4. MAIN LOOP Y CONTROL PRINCIPAL
 // -------------------------------------------------------------------
 const int BTN_PRG = 0;
-const int BAT_PIN = 1;
+const int BAT_PIN = 37; // Pin ADC Bateria en Heltec V2
 unsigned long lastInteractionTime = 0;
 
 void setup() {
