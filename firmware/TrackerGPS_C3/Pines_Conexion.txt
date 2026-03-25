@@ -6,11 +6,14 @@
    * SCL (Display) -> GPIO 7 (C3)
    * VCC y GND a 3.3v / GND.
 
-2. MODULO GPS/GSM SIM808:
-   * GND (SIM808) -> GND (C3)
-   * 5V o VIN (SIM808) -> 5V Externo (¡Ojo! el C3 super mini no tira suficiente amperaje para mover a fondo un modulo GSM/GPS, usar bateria 18650 potente compartiendo un GND común).
-   * TX (SIM808) -> GPIO 20 (C3)
-   * RX (SIM808) -> GPIO 21 (C3)
+2. MODULO GPS/GSM SIM808 (Identificación exacta de tu placa):
+   * VBAT -> Al POSITIVO (+) directo de tu Batería 18650 (3.7v a 4.2v). ¡El módulo necesita picos de 2A para la antena GPRS, NO lo alimentes del pin VCC/3.3v del pequeño C3!
+   * GND -> Al NEGATIVO (-) de tu Batería Y a un pin GND de tu C3 Super Mini (deben compartir masa para que los datos transiten).
+   * VIO -> Al pin 3.3V de tu C3 Super Mini. Esto nivela los datos a 3.3V y cuida la placa.
+   * TX -> Al pin GPIO 20 del C3 Super Mini.
+   * RX -> Al pin GPIO 21 del C3 Super Mini.
+   * PWR -> Pin de encendido (PWRKEY). Si el módulo no arranca rojo/titilando al darle energía, hace un puente permanente de este pin con GND.
+   * DTR, RI, RST -> Dejalos desconectados.
 
 3. BOTON PORTAL WEB / CONFIGURACION:
    * Utiliza el botón físico incorporado en la placa que dice "BOOT".
