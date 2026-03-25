@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPS Tracker Pro Dashboard</title>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="map"></div>
+    
+    <div class="glass-panel">
+        <div class="header">
+            <div class="pulse-indicator" id="status-indicator"></div>
+            <h1>Sistema de Monitoreo GPS</h1>
+        </div>
+        
+        <div class="selector-container">
+            <select id="device-select" class="glass-select">
+                <option value="ALL">Vista Global (Todos)</option>
+            </select>
+        </div>
+        
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>Status Flota</h3>
+                <p id="speed-val"><span class="number">--</span> activos</p>
+            </div>
+            <div class="stat-card">
+                <h3>Ultima Conexion</h3>
+                <p id="time-val" class="time-text">--/--/-- --:--</p>
+            </div>
+            <div class="stat-card">
+                <h3>ID Dispositivo</h3>
+                <p id="dev-val" class="focus-text">Buscando...</p>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <button id="refresh-btn" class="btn-primary">Sincronizar Datos</button>
+            <p class="auto-update-text">Actualizacion automatica cada 10s</p>
+        </div>
+    </div>
+    
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+    <script src="script.js"></script>
+</body>
+</html>

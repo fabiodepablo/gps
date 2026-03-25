@@ -1,0 +1,20 @@
+====== CONEXIONES PARA EL HELTEC ESP32 LORA V3 ======
+
+1. PANTALLA OLED:
+   * Ya viene soldada internamente en la placa Heltec.
+   * Pines internos usados: SDA=17, SCL=18, RST=21.
+   * Pin de energia interno (Vext): GPIO36 (controlado por el software).
+
+2. MODULO GPS/GSM SIM808:
+   * GND (SIM808) -> GND (Heltec)
+   * 5V o VIN (SIM808) -> Pin 5V de Heltec (¡Asegurate que la batería alimente esto!).
+   * TX (SIM808) -> GPIO 4 (Heltec)
+   * RX (SIM808) -> GPIO 5 (Heltec)
+
+3. BOTON PORTAL WEB / CONFIGURACION:
+   * Utiliza el botón físico de la placa que dice "PRG".
+   * Pin interno: GPIO 0.
+
+4. LECTURA DE BATERIA 18650:
+   * Viene incorporado en el Heltec V3 internamente.
+   * Pin interno: GPIO 1 (Con calibracion resuelta por software).

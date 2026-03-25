@@ -1,0 +1,21 @@
+====== CONEXIONES PARA EL ESP32-C3 SUPER MINI ======
+
+1. PANTALLA OLED:
+   * Necesitas una pantalla I2C estandar (ej. 0.96" amarilla/azul).
+   * SDA (Display) -> GPIO 6 (C3)
+   * SCL (Display) -> GPIO 7 (C3)
+   * VCC y GND a 3.3v / GND.
+
+2. MODULO GPS/GSM SIM808:
+   * GND (SIM808) -> GND (C3)
+   * 5V o VIN (SIM808) -> 5V Externo (¡Ojo! el C3 super mini no tira suficiente amperaje para mover a fondo un modulo GSM/GPS, usar bateria 18650 potente compartiendo un GND común).
+   * TX (SIM808) -> GPIO 20 (C3)
+   * RX (SIM808) -> GPIO 21 (C3)
+
+3. BOTON PORTAL WEB / CONFIGURACION:
+   * Utiliza el botón físico incorporado en la placa que dice "BOOT".
+   * Internamente su pin es: GPIO 9.
+
+4. LECTURA DE BATERIA 18650 (Opcional):
+   * Conecta tu bateria usando un divisor resistivo al pin: GPIO 2.
+   * Si no lo usas, la barrita de bateria OLED se quedara en vacio o llena por ruido.

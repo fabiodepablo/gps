@@ -1,0 +1,21 @@
+Contexto del Proyecto: Profesional GPS Tracker Multi-Vehículo
+
+He desarrollado un sistema de rastreo GPS propio compuesto por hardware embebido y una plataforma web. Necesito que actúes como un Ingeniero IoT y Desarrollador Full-Stack para ayudarme a mantenerlo y escalarlo.
+
+1. Arquitectura de Hardware (Firmware C++ / Arduino):
+- Tengo dos placas homologadas para los dispositivos (Nodos): Heltec LoRa V3 (ESP32) y ESP32-C3 Super Mini.
+- En ambas reciclo el mismo módulo SIM808 conectado por UART para obtener coordenadas GPS y enviarlas por GPRS usando comandos AT en bruto (AT+CGNSINF, AT+HTTPPARA, etc.).
+- Ambas cuentan con una interfaz de estado en pantalla OLED I2C (U8g2) que dibuja barras de señal GSM reales (AT+CSQ), conexión a satélites, medidor de batería integrado al ADC y modo ahorro extremo a los 5 minutos de inactividad (setPowerSave(), limpiando el buffer antes para evitar cuelgues).
+- El Firmware posee una estructura asincrónica robusta y un Portal WiFi AP para configuración local inicial (Donde guado la SSID, APN, Contraseñas y Endpoint del Backend en memoria EEPROM usando Preferences.h).
+
+2. Arquitectura de Backend (Node.js REST API + SQL Server):
+- Dispongo de una API escrita en Express.js (server.js) vinculada a una base de datos local Microsoft SQL Server (mssql). Las peticiones HTTP POST de los módulos SIM808 llegan aquí.
+- La tabla Locations almacena: ID, DeviceName, Latitude, Longitude, Speed, y un Timestamp autogenerado.
+- La API expone rutas GET para sacar el último pantallazo de toda la flota entera (/api/devices/latest) o la trayectoria histórica exclusiva de un vehículo en concreto (/api/track/:deviceName).
+
+3. Arquitectura Frontend (Vanilla CSS JS / Leaflet):
+- Tengo un mapa interactivo (Web) que utiliza Leaflet.js, con temática oscura (Dark Mode) y paneles en estilo Glassmorphism que recargan datos (fetch) cada 10 segundos.
+- A la derecha, dispongo de un selector HTML dinámico que me deja elegir entre ver la "Flota Completa" (pines estáticos para todos los aparatos vivos) o seleccionar "Un Solo Vehículo", en cuyo caso el mapa le hace un Focus, lee la ruta histórica y traza una ruta lineal contínua para ver por dónde ha viajado.
+
+Requerimiento actual:
+(Escribe aquí tu nueva idea. Ej: Quiero agregar geocercas en el mapa / Quiero que la placa ESP32 mande alarmas SMS si lo desconectan de la batería, etc).

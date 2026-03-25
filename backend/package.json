@@ -1,0 +1,14 @@
+{
+  "name": "gps-tracker-api",
+  "version": "1.0.0",
+  "description": "API REST para recibir coordenadas del Heltec ESP32 SIM808 y guardarlas en SQL Server",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "mssql": "^10.0.1"
+  }
+}
